@@ -10,6 +10,9 @@
 (defvar *base-uri*
   (quri:uri "https://eurolive.jp/shibuya-rakugo/"))
 
+(defparameter *venue* "ユーロライブ")
+(defparameter *venue-address* "東京都渋谷区円山町1-5 KINOHAUS2F")
+
 (defun parse-performers (performers)
   (mapcar (lambda (performer)
             (ppcre:regex-replace "\\*+$" performer ""))
@@ -47,4 +50,6 @@
     (assert main)
     (assert (< 0 (length schedules)))
     `(("schedules" . ,(loop for schedule across schedules
-                            append (parse-dl schedule))))))
+                            append (parse-dl schedule)))
+      ("place" . ,*venue*)
+      ("address" . ,*venue-address*))))
